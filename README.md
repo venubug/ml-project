@@ -25,14 +25,14 @@ Welcome to the Dog Breed Prediction project! This repository utilizes machine le
 
 ## Contributing
 
-Contributions are welcome! Please follow our [contribution guidelines](CONTRIBUTING.md).
+Contributions are welcome.
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed 
 
 ## Acknowledgments
 
-- Special thanks to [source of dataset] for providing the dog breed dataset.
+- Special thanks to [imagenet] for providing the dog breed dataset.
 
 Happy coding and dog breed predicting! 🐶🔮
