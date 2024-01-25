@@ -1,0 +1,45 @@
+import torch
+import torch.nn as nn
+import torchvision.models as models
+import torchvision.transforms as
+transformsfrom PIL import Image
+import requests
+from io import BytesIO
+
+model = models.resnet50(pretrained=True)
+
+model.eval()
+
+labels_url='https://raw.githubusercontent.com/pytorch/hub/master/imagenet_classe 
+s.txt'
+ response=requests.get(labels_url)
+labels = response.text.split('\n')
+
+def preprocess_image(image):
+transform =
+transforms.Compose([
+transforms.Resize(256),
+transforms.CenterCrop(224),
+transforms.ToTensor(),
+transforms.Normalize(
+mean=[0.485, 0.456, 0.406],
+std=[0.229, 0.224, 0.225]
+)])
+ image = transform(image) 
+return image.unsqueeze(0)
+
+def predict_breed(image_url):
+response = requests.get(image_url)
+image = Image.open(BytesIO(response.content))I
+mage = preprocess_image(image)
+with torch.no_grad():
+output = model(image)
+probabilities = torch.nn.functional.softmax(output[0], dim=0)
+top_prob, top_class = torch.topk(probabilities, 1) predicted_label
+= labels[top_class]
+return predicted_label
+
+imageURL:
+image_url = 'https://images.dog.ceo/breeds/beagle/n02088364_1513.jpg'
+predicted_breed = predict_breed(image_url)
+print(predicted_breed)
